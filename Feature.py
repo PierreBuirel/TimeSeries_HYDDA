@@ -75,8 +75,8 @@ def get_feature_output(L):
 
     e = []
     f = []
-    default = 0
-    C = 5
+    default = L[0]
+    C = 1
     D = -1000
     eiupdate=[]
 
@@ -102,7 +102,7 @@ def get_feature_output(L):
         elif (Lbis[i]=="out_a"):
             eiupdate.append(i)
             D=-1000
-            C=5
+            C=min(e,C)
             for i in range(len(eiupdate)):
                 e.append(C)
             eiupdate = []

@@ -1,0 +1,3 @@
+dict_peak = {'d': {'>': {etat_suivant :'d',lettre_semantique : "out"}, '=': {etat_suivant :'d',lettre_semantique : "out"}, '<': {etat_suivant :'r',lettre_semantique : "out"}},
+       'r': {'>': {etat_suivant :'t',lettre_semantique : "found"}, '=': {etat_suivant :'r',lettre_semantique : "maybe_before"}, '<': {etat_suivant :'t',lettre_semantique : "maybe_before"}},
+       't': {'>': {etat_suivant :'t',lettre_semantique : "in"}, '=': {etat_suivant :'t',lettre_semantique : "maybe_after"}, '<': {etat_suivant :'r',lettre_semantique : "out_after"}}}
