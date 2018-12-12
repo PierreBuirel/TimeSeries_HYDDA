@@ -1,3 +1,10 @@
-dict_peak = {'d': {'>': {etat_suivant :'d',lettre_semantique : "out"}, '=': {etat_suivant :'d',lettre_semantique : "out"}, '<': {etat_suivant :'r',lettre_semantique : "out"}},
-       'r': {'>': {etat_suivant :'t',lettre_semantique : "found"}, '=': {etat_suivant :'r',lettre_semantique : "maybe_before"}, '<': {etat_suivant :'t',lettre_semantique : "maybe_before"}},
-       't': {'>': {etat_suivant :'t',lettre_semantique : "in"}, '=': {etat_suivant :'t',lettre_semantique : "maybe_after"}, '<': {etat_suivant :'r',lettre_semantique : "out_after"}}}
+dict_peak = 
+    {'d': {'>': {next_state :'d',semantic_letter : "out"}, 
+        '=': {next_state :'d',semantic_letter : "out"}, 
+        '<': {next_state :'r',semantic_letter : "out"}},
+    'r': {'>': {next_state :'t',semantic_letter : "found"}, 
+        '=': {next_state :'r',semantic_letter : "maybe_before"}, 
+        '<': {next_state :'t',semantic_letter : "maybe_before"}},
+    't': {'>': {next_state :'t',semantic_letter : "in"}, 
+        '=': {next_state :'t',semantic_letter : "maybe_after"}, 
+        '<': {next_state :'r',semantic_letter : "out_after"}}}
