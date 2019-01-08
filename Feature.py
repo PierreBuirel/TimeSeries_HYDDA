@@ -106,6 +106,7 @@ def get_feature_output(L):
             for i in range(len(eiupdate)):
                 e.append(C)
             eiupdate = []
+
     print(e)
     print(f)
     return e,f
