@@ -10,9 +10,30 @@ dict_peak = {'d': {'>': {"next_state" :'d',"semantic_letter" : "out"},
         '<': {"next_state" :'t',"semantic_letter" : "maybe_before"}},
         't': {'>': {"next_state" :'t',"semantic_letter" : "in"},
         '=': {"next_state" :'t',"semantic_letter" : "maybe_after"},
-        '<': {"next_state" :'r',"semantic_letter" : "out_after"}}}
+        '<': {"next_state" :'r',"semantic_letter" : "out_after"}},'beginning_state' : 'd'}
 
 
+def get_output_from_dict(L):
+    currentstate = dict_peak.get('beginning_state')
+    output=[]
+    i = 0;
+    while(i<len(L)-1):
+
+        # Signature
+        if L[i] < L[i + 1]:
+            signature="<"
+        elif L[i] == L[i + 1]:
+            signature="="
+        else:
+            signature=">"
+
+        output.append(dict_peak.get(currentstate).get(signature).get("semantic_letter"))
+        currentstate = dict_peak.get(currentstate).get(signature).get("next_state")
+        i=i+1;
+
+    return(output)
+
+print (get_output_from_dict(L_init))
 
 def get_signature(L):
    S = []
@@ -53,7 +74,7 @@ def signature_to_state(L):
 def get_state(L):
    return signature_to_state(get_signature(L))
 
-print (get_state(L_init))
+
 
 def state_to_output(L):
    Out = []
