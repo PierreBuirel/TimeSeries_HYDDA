@@ -2,6 +2,16 @@ import numpy as np
 
 L_init = [3, 2, 2, 1, 2, 3, 1, 1, 2, 3, 4, 2, 3, 3, 3, 1]
 
+dict_peak = {'d': {'>': {"next_state" :'d',"semantic_letter" : "out"},
+        '=': {"next_state" :'d',"semantic_letter" : "out"},
+        '<': {"next_state" :'r',"semantic_letter" : "out"}},
+        'r': {'>': {"next_state" :'t',"semantic_letter" : "found"},
+        '=': {"next_state" :'r',"semantic_letter" : "maybe_before"},
+        '<': {"next_state" :'t',"semantic_letter" : "maybe_before"}},
+        't': {'>': {"next_state" :'t',"semantic_letter" : "in"},
+        '=': {"next_state" :'t',"semantic_letter" : "maybe_after"},
+        '<': {"next_state" :'r',"semantic_letter" : "out_after"}}}
+
 
 
 def get_signature(L):
@@ -43,7 +53,7 @@ def signature_to_state(L):
 def get_state(L):
    return signature_to_state(get_signature(L))
 
-#print (get_state(L_init))
+print (get_state(L_init))
 
 def state_to_output(L):
    Out = []
@@ -63,7 +73,7 @@ def state_to_output(L):
            Out.append("out_a")
    return Out
 
-#print(state_to_output(get_state(L_init)))
+print(state_to_output(get_state(L_init)))
 
 def get_feature_output(L):
 
@@ -107,10 +117,7 @@ def get_feature_output(L):
                 e.append(C)
             eiupdate = []
 
-    print(e)
-    print(f)
+
     return e,f
 
-
-get_feature_output(L_init)
 
