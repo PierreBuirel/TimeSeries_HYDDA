@@ -1,6 +1,9 @@
 import numpy as np
 
+# Input time serie
 L_init = [3, 2, 2, 1, 2, 3, 1, 1, 2, 3, 4, 2, 3, 3, 3, 1]
+
+# Output features Output_Features = [[guard_list,c_list,feature value],]
 
 dict_peak = {'d': {'>': {"next_state" :'d',"semantic_letter" : "out"},
         '=': {"next_state" :'d',"semantic_letter" : "out"},
@@ -12,14 +15,61 @@ dict_peak = {'d': {'>': {"next_state" :'d',"semantic_letter" : "out"},
         '=': {"next_state" :'t',"semantic_letter" : "maybe_after"},
         '<': {"next_state" :'r',"semantic_letter" : "out_after"}},'beginning_state' : 'd'}
 
+dict_footprint = {'out' : {'guard' : "0",'C' : 'C'},
+                    'out_before' : {'guard' : "0",'C' : 'C'},
+                    'out_after' : {'guard' : "0",'C' : 'C'},
+                    'maybe_before' : {'guard' : "nextguard",'C' : 'C'},
+                    'maybe_after' : {'guard' : "nextguard",'C' : 'C'},
+                    'found_end' : {'guard' : "Cincr",'C' : 'Cincr'},
+                    'found' : {'guard' : "Cincr",'C' : 'Cincr'},
+                    'in' : {'guard' : "C",'C' : 'C'}}
+
+# Cf page 12 time_series_journal.pdf
+
+dict_feature = {'one' : {'neutralf' : 'func_one', 'minf' : 1, 'maxf' : 1, 'phif' : 'max', 'deltaf' : 0},
+                'width' : {'neutralf' : '', 'minf' : '', 'maxf' : '', 'phif' : '', 'deltaf' : ''},
+                'surface' : {'neutralf' : '', 'minf' : '', 'maxf' : '', 'phif' : '', 'deltaf' : ''},
+                'max' : {'neutralf' : -np.Infinity, 'minf' : -np.Infinity, 'maxf' : +np.Infinity, 'phif' : 'max', 'deltaf' : 'x'},
+                'min' : {'neutralf' : '', 'minf' : '', 'maxf' : '', 'phif' : '', 'deltaf' : ''}}
+
+
+
+
+def updateP(index,list,val):
+    verif=True
+    while(index>=0 and verif==True):
+        if(list[index]<0):
+            list[index]=val
+        else:
+            verif=False
+        index=index-1
+    return(list)
+
+
+# Fonction retournant les lettres semantiques a partir d'une serie temporelle et d'un dictionnaire
 
 def get_output_from_dict(L):
+
+    #State list
     currentstate = dict_peak.get('beginning_state')
+
+    #Semantic letters
     output=[]
+
+    #C list
+    C=0
+    c_list=[]
+
+    #Guard list
+    guard=0
+    guard_list=[]
+
+
     i = 0;
     while(i<len(L)-1):
 
         # Signature
+
         if L[i] < L[i + 1]:
             signature="<"
         elif L[i] == L[i + 1]:
@@ -27,13 +77,73 @@ def get_output_from_dict(L):
         else:
             signature=">"
 
-        output.append(dict_peak.get(currentstate).get(signature).get("semantic_letter"))
+        # Update of the semantic letter
+
+        semantic_letter = dict_peak.get(currentstate).get(signature).get("semantic_letter")
+        output.append(semantic_letter)
+
+        # Update of the state
+
         currentstate = dict_peak.get(currentstate).get(signature).get("next_state")
+
+        # Update of the footprint
+
+        guard_temp = dict_footprint.get(semantic_letter).get("guard")
+        C_temp = dict_footprint.get(semantic_letter).get("C")
+
+        # Update of the guard
+
+        if(guard_temp=="0"):
+            guard=0
+            guard_list=updateP(i-1,guard_list,guard)
+        elif(guard_temp=="nextguard"):
+            # We set the value to -1 so it will be easy to find which one to update
+            guard=-1
+        elif(guard_temp=="Cincr"):
+            guard=C+1
+            guard_list = updateP(i-1, guard_list, guard)
+        elif(guard_temp=="C"):
+            guard=C
+            guard_list = updateP(i-1, guard_list, guard)
+
+        # Update of C
+
+        if(C_temp=="Cincr"):
+            C=C+1
+
+        # Update of the lists
+
+        guard_list.append(guard)
+        c_list.append(C)
+
+        # Computing of the feature
+
+
         i=i+1;
 
-    return(output)
+    print(output)
+    print(guard_list)
+    print(c_list)
 
-print (get_output_from_dict(L_init))
+    return(output,guard_list,c_list)
+
+
+
+
+get_output_from_dict(L_init)
+
+
+
+
+
+
+
+# En dessous c'est ce qu'on avait fait avant
+
+
+
+
+
 
 def get_signature(L):
    S = []
