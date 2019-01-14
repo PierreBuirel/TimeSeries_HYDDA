@@ -32,6 +32,56 @@ dict_feature = {'one' : {'neutralf' : 'func_one', 'minf' : 1, 'maxf' : 1, 'phif'
                 'max' : {'neutralf' : -np.Infinity, 'minf' : -np.Infinity, 'maxf' : +np.Infinity, 'phif' : 'max', 'deltaf' : 'x'},
                 'min' : {'neutralf' : '', 'minf' : '', 'maxf' : '', 'phif' : '', 'deltaf' : ''}}
 
+# Dictionnaire table de décoration
+
+dict_decoration_table = {'out' :
+                             {'C' : {'function' : 'None', 'parameters' : ['C']}},
+                    'out_before' :
+                        {'C' : {'function' : 'None', 'parameters' : ['C']}},
+                    'out_after' :
+                             {'C' : {'function' : 'default_gf', 'parameters' : [{'function' : 'None', 'parameters' : ['']}]}},
+                    'maybe_before' :
+                             {'C' : {'function' : 'None', 'parameters' : ['C']}},
+                    'maybe_after' :
+                             {'C' : {'function' : 'None', 'parameters' : ['C']}},
+                    'found' :
+                             {'C' : {'function' : 'update_found_c', 'parameters' : [{'function' : 'None', 'parameters' : ['']}]}},
+                    'in' :
+                             {'C' : {'function' : 'update_in_c', 'parameters' : [{'function' : 'None', 'parameters' : ['']}]}},
+                    'found_end' :
+                             {'C' : {'function' : 'None', 'parameters' : ['C']}}}
+
+# Dictionnaire update
+
+dict_update_decoration_table = {'found' :
+                             {'C' : {'function' : 'phi_f', 'parameters' :
+                                 [{'function' : 'phi_f', 'parameters' :
+                                     [{'function' : "None", 'parameters' :
+                                         ['D']},{'function' : 'delta_f','parameters' :
+                                         [{'function' : 'None', 'parameters' : ['']}]}]},
+                                  {'function' : 'delta_f', 'parameters' :
+                                      ['']}]}},
+                    'out_before' : {'C' : {'function' : 'phi_f', 'parameters' :
+                        [{'function' : 'None','parameters':['C']},
+                         {'function' : 'phi_f','parameters':
+                             [{'function' : 'None','parameters':['D']},{'function' : 'delta_f','parameters':[{'function' : 'None', 'parameters' : ['']}]}]}]}
+                                    },
+                    }
+
+
+def functionDecorationTable(func,arg) :
+
+    # func = requete nécessaire pour accéder à une fonction dans le dictionnaire
+    # dic ??????
+    # arg
+
+    if(func.get('function')=="None"):
+        return(func.get(parameters)[0])
+
+    if(func.get('parameters').)
+
+    else:
+
 
 
 
